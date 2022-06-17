@@ -77,7 +77,7 @@ syntax enable
 map <C-k><C-k> :NERDTreeToggle<CR>
 nnoremap <C-p> :Files<CR>
 nmap <C-b> :Buffers<CR>
-
+inoremap jj <Esc>
 command! -bang -nargs=* Ag
   \ call fzf#vim#grep(
   \   'ag --column --numbers --noheading --color --smart-case '.shellescape(<q-args>), 1,
