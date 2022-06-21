@@ -24,6 +24,8 @@ set list lcs=tab:>-      "(here is a space)
 let &t_SI = "\e[6 q"      " Make cursor a line in insert
 let &t_EI = "\e[2 q"      " Make cursor a line in insert
 set modifiable
+set colorcolumn=120
+autocmd ColorScheme * highlight ColorColumn ctermbg=red
 
 " Keep VisualMode after indent with > or <
 vmap < <gv
@@ -70,6 +72,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'maxmellon/vim-jsx-pretty'
+
 call plug#end()
 syn match   cOctalError display contained "0\o*[89]\d*"
 syntax enable
