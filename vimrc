@@ -1,6 +1,7 @@
 " config.vim
+" Remap leader to space
+map <Space> <Leader>
 
-let mapleader = ","
 set nocompatible
 set number                " Show numbers on the left
 set hlsearch              " Highlight search results
@@ -26,6 +27,8 @@ let &t_EI = "\e[2 q"      " Make cursor a line in insert
 set modifiable
 set colorcolumn=120
 autocmd ColorScheme * highlight ColorColumn ctermbg=red
+highlight ExtraWhitespace ctermbg=red guibg=red
+set list
 
 " Keep VisualMode after indent with > or <
 vmap < <gv
@@ -47,6 +50,22 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" indentation for js files tabwidth 2
+augroup FileTypeSpecificAutocommands
+    autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
+" Open NERDTree in the directory of the current file (or /home if no file is open)
+nmap <silent> <C-i> :call NERDTreeToggleInCurDir()<cr>
+function! NERDTreeToggleInCurDir()
+  " If NERDTree is open in the current buffer
+  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+    exe ":NERDTreeClose"
+  else
+    exe ":NERDTreeFind"
+  endif
+endfunction
+
 " Plugins
 call plug#begin('~/.vim/plugged')
 " Plugins here !!!!
@@ -56,11 +75,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' } " File navigator
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }     " Install fuzzy finder binary
 Plug 'junegunn/fzf.vim'
-Plug 'vim-scripts/AutoComplPop'
 Plug 'dense-analysis/ale'
 Plug 'preservim/nerdcommenter'
-"{{ Autopairs
-"" ---> closing XML tags <---
 Plug 'alvan/vim-closetag'
 let g:closetag_filenames ='*.html,*.xhtml,*.xml,*.vue,*.phtml,*.js,*.jsx,*.coffee,*.erb'
 Plug 'jiangmiao/auto-pairs'
@@ -73,6 +89,9 @@ Plug 'tpope/vim-commentary'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'pechorin/any-jump.vim'
+Plug 'eslint/eslint'
+Plug 'nestorsalceda/vim-strip-trailing-whitespaces'
 
 call plug#end()
 syn match   cOctalError display contained "0\o*[89]\d*"
@@ -82,13 +101,14 @@ map <C-k><C-k> :NERDTreeToggle<CR>
 nnoremap <C-p> :Files<CR>
 nmap <C-b> :Buffers<CR>
 inoremap jj <Esc>
+
 command! -bang -nargs=* Ag
   \ call fzf#vim#grep(
   \   'ag --column --numbers --noheading --color --smart-case '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
 
-map <C-g> :Ag 
-
+map <C-g> :Git
+map <C-f> :Ag
 set visualbell t_vb=
 if has("autocmd") && has("gui")
     au GUIEnter * set t_vb=
@@ -99,7 +119,7 @@ colorscheme gruvbox
 set bg=dark
 
 set relativenumber
-let g:fzf_layout = { 'down': '40%' } 
+let g:fzf_layout = { 'down': '40%' }
 nmap <silent> <C-e> <Plug>(ale_next_wrap)
 
 function! LinterStatus() abort
@@ -116,7 +136,8 @@ set statusline+=%=
 set statusline+=\ %{LinterStatus()}
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 1
-let g:ale_sign_warning = '.'
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
 
 set encoding=utf-8
 let g:ale_fixers = {'javascript': ['eslint']}
