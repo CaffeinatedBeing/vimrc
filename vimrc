@@ -92,6 +92,7 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'pechorin/any-jump.vim'
 Plug 'eslint/eslint'
 Plug 'nestorsalceda/vim-strip-trailing-whitespaces'
+Plug 'vim-scripts/vim-gitgutter'
 
 call plug#end()
 syn match   cOctalError display contained "0\o*[89]\d*"
