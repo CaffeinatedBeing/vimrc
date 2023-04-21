@@ -56,7 +56,7 @@ augroup FileTypeSpecificAutocommands
 augroup END
 
 " Open NERDTree in the directory of the current file (or /home if no file is open)
-nmap <silent> <C-i> :call NERDTreeToggleInCurDir()<cr>
+nmap <silent> <C-k><C-i> :call NERDTreeToggleInCurDir()<cr>
 function! NERDTreeToggleInCurDir()
   " If NERDTree is open in the current buffer
   if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
@@ -70,7 +70,7 @@ endfunction
 call plug#begin('~/.vim/plugged')
 " Plugins here !!!!
 Plug 'tpope/vim-sensible'         " Sensible defaults
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'morhetz/gruvbox'
 Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' } " File navigator
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }     " Install fuzzy finder binary
 Plug 'junegunn/fzf.vim'
@@ -85,14 +85,16 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'pechorin/any-jump.vim'
 Plug 'eslint/eslint'
 Plug 'nestorsalceda/vim-strip-trailing-whitespaces'
 Plug 'vim-scripts/vim-gitgutter'
 Plug 'neoclide/vim-jsx-improve'
+Plug 'vim-ruby/vim-ruby' " For Facts, Ruby functions, and custom providers
+
 
 call plug#end()
 syn match   cOctalError display contained "0\o*[89]\d*"
@@ -162,7 +164,7 @@ if has("autocmd") && has("gui")
 endif
 
 let g:airline_theme='simple'
-colorscheme dracula
+colorscheme gruvbox
 set bg=dark
 
 set relativenumber
@@ -190,4 +192,5 @@ set encoding=utf-8
 let g:ale_fixers = {'javascript': ['eslint']}
 
 let g:airline_powerline_fonts = 1
+set guifont=DejaVu\ Sans\ Mono:h12
 
