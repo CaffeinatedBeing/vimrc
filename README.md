@@ -1,4 +1,4 @@
-Vim setup with features similar to VSCode
+**Make VIM Look & Work like VS Code for Web Development**
 Features: File Manager, File search, Buffer controller, Text search, Auto complete, Go To Definition
 Languages Supported: Go, JS, PHP, Ruby
 
