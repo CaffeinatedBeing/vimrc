@@ -1,3 +1,7 @@
+Vim setup with features similar to VSCode
+Features: File Manager, File search, Buffer controller, Text search, Auto complete, Go To Definition
+Languages Supported: Go, JS, PHP, Ruby
+
 Clone into .vim directory in your ~ (home)
 ```
 git clone <repository_url> .vim
